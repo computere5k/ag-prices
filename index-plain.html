@@ -43,24 +43,24 @@ display: none;
              }
             
               if (data.data[i].year === currentYear && data.data[i].state_fips_code === "99" ) {
-             thisYearUsData += "<td>" + data.data[i].Value + "</td>";
+             thisYearUsData += "<td style='text-align: center'>" + data.data[i].Value + "</td>";
              }
             
                       if (data.data[i].year === currentYear - 1 && data.data[i].state_fips_code === "49" ) {
  lastYearHeaderData += "<th>" + data.data[i].reference_period_desc + "<br/>"+ data.data[i].year + "</th>";
-             lastYearUtahData += "<td>" + data.data[i].Value + "</td>";
+             lastYearUtahData += "<td style='text-align: center'>" + data.data[i].Value + "</td>";
              }
             
               if (data.data[i].year === currentYear - 1 && data.data[i].state_fips_code === "99" ) {
-             lastYearUsData += "<td>" + data.data[i].Value + "</td>";
+             lastYearUsData += "<td style='text-align: center'>" + data.data[i].Value + "</td>";
              }
                                   if (data.data[i].year === currentYear - 2 && data.data[i].state_fips_code === "49" ) {
  extraYearHeaderData += "<th class='text-center'>" + data.data[i].reference_period_desc + "<br/>"+ data.data[i].year + "</th>";
-             extraYearUtahData += "<td>" + data.data[i].Value + "</td>";
+             extraYearUtahData += "<td style='text-align: center'>" + data.data[i].Value + "</td>";
              }
             
               if (data.data[i].year === currentYear - 2 && data.data[i].state_fips_code === "99" ) {
-             extraYearUsData += "<td>" + data.data[i].Value + "</td>";
+             extraYearUsData += "<td style='text-align: center'>" + data.data[i].Value + "</td>";
              }
                    document.getElementById("other-hay-table").innerHTML = "<thead><tr><th></th>" + extraYearHeaderData + lastYearHeaderData + thisYearHeaderData + "</tr></thead><tbody><tr><td><strong>Utah</strong></td>" + extraYearUtahData + lastYearUtahData + thisYearUtahData + "</tr><tr><td><strong>U.S.</strong></td>" + extraYearUsData + lastYearUsData + thisYearUsData + "</tr></tbody>"
            
