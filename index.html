@@ -4,91 +4,159 @@
     <title>Ag Prices</title>
     <meta name="description" content="Our first page" />
     <meta name="keywords" content="html tutorial template" />
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-      <style>
-         .price-charts tr>:nth-child(n+2):nth-last-child(n+13){
-display: none;
-} </style> 
-
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+      integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N"
+      crossorigin="anonymous"
+    />
+    <style>
+      .price-charts tr > :nth-child(n + 2):nth-last-child(n + 13) {
+        display: none;
+      }
+    </style>
   </head>
-      
-<body>
+
+  <body>
     <div class="container mt-4">
-    <h1>Ag Prices</h1>
-<p><strong>Prices Received</strong></p>
-          
+      <h1>Ag Prices</h1>
+      <p><strong>Prices Received</strong></p>
+
       <h2>Other Hay <small>(dollars per ton)</small></h2>
-      <table class="table table-bordered price-charts" id="other-hay-table">
-      </table>
-    
-    <p><small><strong><em>Source: <a href="https://quickstats.nass.usda.gov/" target="_blank">USDA-NASS</a></em></strong><br/>This product uses the NASS API but is not endorsed or certified by NASS.</small></p>
+      <table
+        class="table table-bordered price-charts"
+        id="other-hay-table"
+      ></table>
+
+      <p>
+        <small
+          ><strong
+            ><em
+              >Source:
+              <a href="https://quickstats.nass.usda.gov/" target="_blank"
+                >USDA-NASS</a
+              ></em
+            ></strong
+          ><br />This product uses the NASS API but is not endorsed or certified
+          by NASS.</small
+        >
+      </p>
     </div>
-</body>
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
-<script>
-    
-    const currentYear =  new Date().getFullYear();
+  </body>
+  <script
+    src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"
+  ></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
+    crossorigin="anonymous"
+  ></script>
+  <script>
+    const currentYear = new Date().getFullYear();
     const recentYears = currentYear - 2;
-     fetch(
-      "https://cors-anywhere.herokuapp.com/https://quickstats.nass.usda.gov/api/api_GET/?key=0EA2A509-4263-389F-B0E8-E39DA9D250F1&commodity_desc=HAY&class_desc=(EXCL%20ALFALFA)&state_fips_code=99&state_fips_code=49&statisticcat_desc=PRICE%20RECEIVED&unit_desc=$%20/%20TON&freq_desc=MONTHLY&year__GE="+ recentYears + "&format=JSON"
-    )
-   fetch(
+    fetch(
+      "https://mtnagproxy.herokuapp.com/https://quickstats.nass.usda.gov/api/api_GET/?key=0EA2A509-4263-389F-B0E8-E39DA9D250F1&commodity_desc=HAY&class_desc=(EXCL%20ALFALFA)&state_fips_code=99&state_fips_code=49&statisticcat_desc=PRICE%20RECEIVED&unit_desc=$%20/%20TON&freq_desc=MONTHLY&year__GE=" +
+        recentYears +
+        "&format=JSON"
+    );
+    fetch(
       "https://raw.githack.com/computere5k/ag-prices/main/prices-aug-22.json"
     )
       .then((response) => response.json())
       .then((data) => {
         var i;
         var thisYearHeaderData = "";
-         var thisYearUtahData = "";
-         var thisYearUsData = "";
-           var lastYearHeaderData = "";
-         var lastYearUtahData = "";
-         var lastYearUsData = "";
-                   var extraYearHeaderData = "";
-         var extraYearUtahData = "";
-         var extraYearUsData = "";
-         
-        for (i = 0; i < data.data.length ; i++) {
-                                     
+        var thisYearUtahData = "";
+        var thisYearUsData = "";
+        var lastYearHeaderData = "";
+        var lastYearUtahData = "";
+        var lastYearUsData = "";
+        var extraYearHeaderData = "";
+        var extraYearUtahData = "";
+        var extraYearUsData = "";
 
-             if (data.data[i].year === currentYear && data.data[i].state_fips_code === "49" ) {
-  thisYearHeaderData += "<th class='text-center'>" + data.data[i].reference_period_desc + "<br/>"+ data.data[i].year + "</th>";
-             thisYearUtahData += "<td class='text-center'>" + data.data[i].Value + "</td>";
-                              
+        for (i = 0; i < data.data.length; i++) {
+          if (
+            data.data[i].year === currentYear &&
+            data.data[i].state_fips_code === "49"
+          ) {
+            thisYearHeaderData +=
+              "<th class='text-center'>" +
+              data.data[i].reference_period_desc +
+              "<br/>" +
+              data.data[i].year +
+              "</th>";
+            thisYearUtahData +=
+              "<td class='text-center'>" + data.data[i].Value + "</td>";
+          }
 
-             }
-            
-              if (data.data[i].year === currentYear && data.data[i].state_fips_code === "99" ) {
-             thisYearUsData += "<td class='text-center'>" + data.data[i].Value + "</td>";
-             }
-            
-                      if (data.data[i].year === currentYear - 1 && data.data[i].state_fips_code === "49" ) {
- lastYearHeaderData += "<th class='text-center'>" + data.data[i].reference_period_desc + "<br/>"+ data.data[i].year + "</th>";
-             lastYearUtahData += "<td class='text-center'>" + data.data[i].Value + "</td>";
-             }
-            
-              if (data.data[i].year === currentYear - 1 && data.data[i].state_fips_code === "99" ) {
-             lastYearUsData += "<td class='text-center'>" + data.data[i].Value + "</td>";
-             }
-                                  if (data.data[i].year === currentYear - 2 && data.data[i].state_fips_code === "49" ) {
- extraYearHeaderData += "<th class='text-center'>" + data.data[i].reference_period_desc + "<br/>"+ data.data[i].year + "</th>";
-             extraYearUtahData += "<td class='text-center'>" + data.data[i].Value + "</td>";
-             }
-            
-              if (data.data[i].year === currentYear - 2 && data.data[i].state_fips_code === "99" ) {
-             extraYearUsData += "<td class='text-center'>" + data.data[i].Value + "</td>";
-             }
-                   document.getElementById("other-hay-table").innerHTML = "<thead class='thead-light'><tr><th></th>" + extraYearHeaderData + lastYearHeaderData + thisYearHeaderData + "</tr></thead><tbody><tr><td><strong>Utah</strong></td>" + extraYearUtahData + lastYearUtahData + thisYearUtahData + "</tr><tr><td><strong>U.S.</strong></td>" + extraYearUsData + lastYearUsData + thisYearUsData + "</tr></tbody>"
-           
-     
+          if (
+            data.data[i].year === currentYear &&
+            data.data[i].state_fips_code === "99"
+          ) {
+            thisYearUsData +=
+              "<td class='text-center'>" + data.data[i].Value + "</td>";
+          }
 
-      }});
+          if (
+            data.data[i].year === currentYear - 1 &&
+            data.data[i].state_fips_code === "49"
+          ) {
+            lastYearHeaderData +=
+              "<th class='text-center'>" +
+              data.data[i].reference_period_desc +
+              "<br/>" +
+              data.data[i].year +
+              "</th>";
+            lastYearUtahData +=
+              "<td class='text-center'>" + data.data[i].Value + "</td>";
+          }
 
+          if (
+            data.data[i].year === currentYear - 1 &&
+            data.data[i].state_fips_code === "99"
+          ) {
+            lastYearUsData +=
+              "<td class='text-center'>" + data.data[i].Value + "</td>";
+          }
+          if (
+            data.data[i].year === currentYear - 2 &&
+            data.data[i].state_fips_code === "49"
+          ) {
+            extraYearHeaderData +=
+              "<th class='text-center'>" +
+              data.data[i].reference_period_desc +
+              "<br/>" +
+              data.data[i].year +
+              "</th>";
+            extraYearUtahData +=
+              "<td class='text-center'>" + data.data[i].Value + "</td>";
+          }
 
-    
-     </script>
-
+          if (
+            data.data[i].year === currentYear - 2 &&
+            data.data[i].state_fips_code === "99"
+          ) {
+            extraYearUsData +=
+              "<td class='text-center'>" + data.data[i].Value + "</td>";
+          }
+          document.getElementById("other-hay-table").innerHTML =
+            "<thead class='thead-light'><tr><th></th>" +
+            extraYearHeaderData +
+            lastYearHeaderData +
+            thisYearHeaderData +
+            "</tr></thead><tbody><tr><td><strong>Utah</strong></td>" +
+            extraYearUtahData +
+            lastYearUtahData +
+            thisYearUtahData +
+            "</tr><tr><td><strong>U.S.</strong></td>" +
+            extraYearUsData +
+            lastYearUsData +
+            thisYearUsData +
+            "</tr></tbody>";
+        }
+      });
+  </script>
 </html>
-
-
